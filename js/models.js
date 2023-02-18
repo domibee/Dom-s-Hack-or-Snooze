@@ -66,7 +66,7 @@ class StoryList {
     return new StoryList(stories);
   }
 
-  /** Adds story data to API, makes a Story instance, adds it to story list.
+  /** Subpart 2A: Adds story data to API, makes a Story instance, adds it to story list.
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
    *
@@ -76,15 +76,18 @@ class StoryList {
   async addStory(user,{title,author,url}) {
 
     const token = user.loginToken; //obtain logintoken of user who will post the story
-    //
+    //make a POST request to the /stories endpoint of the server, passing the `token` 
+    //and the story object in the request body
     const response = await axios({ 
       method: "POST",
       url: `${BASE_URL}/stories`,
       data: {token, story: {title, author, url}}, 
     });
+    //creates new Story object using the response data, and adds it to the beginning of the `stories` array 
+    //of the currrent `StoryList` instance using the unshift method
     const newStory = new Story(response.data.story);  
-    this.stories.unshift(newStory); //add to the array of stories 
-
+    this.stories.unshift(newStory); 
+    //return new `Story` object
     return newStory;
   }
 }
@@ -204,4 +207,29 @@ class User {
       return null;
     }
   }
+  // Part 3 Add a favorite story to the user favorites
+  static async toggleStoryFavorite(story) {
+    // check if the story is already a favorite
+    const isFavorite = this.favorites.some(s => s.storyId === story.storyId);
+  
+    if (isFavorite) {
+      // if the story is already a favorite, remove it from the user's favorites
+      const response = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+        method: "DELETE",
+        data: { token: this.loginToken },
+      });
+      this.favorites = this.favorites.filter(s => s.storyId !== story.storyId);
+    } else {
+      // if the story is not a favorite, add it to the user's favorites
+      const response = await axios({
+        url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+        method: "POST",
+        data: { token: this.loginToken },
+      });
+      this.favorites.push(story);
+    }
+  }
 }
+
+

@@ -93,6 +93,7 @@ function saveUserCredentialsInLocalStorage() {
   if (currentUser) {
     localStorage.setItem("token", currentUser.loginToken);
     localStorage.setItem("username", currentUser.username);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
   }
 }
 
@@ -110,7 +111,8 @@ function saveUserCredentialsInLocalStorage() {
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
+  hidePageComponents();
+  
   $allStoriesList.show();
-
   updateNavOnLogin();
 }

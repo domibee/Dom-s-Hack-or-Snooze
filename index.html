@@ -45,9 +45,24 @@
   </div>
 </nav>
 
-<!-- area for stories (all stories, user stories, favorites) -->
+<!-- subpart 2B: area for stories (all stories, user stories, favorites) -->
 <section class="stories-container container">
-  <form class = "hidden">
+  <!-- form for submitting a new story -->
+  <form action="#" class="hidden" id="submit-form">
+    <div>
+      <label for="create-author">author</label>
+      <input id="create-author" required placeholder="author name">
+    </div>
+    <div>
+      <label for="create-title">title</label>
+      <input id="create-title" required placeholder="story title">
+    </div>
+    <div>
+      <label for="create-url">url</label>
+      <input id="create-url" required type="url" placeholder="story url">
+    </div>
+    <button type="submit">submit</button>
+    <hr>
   </form>
 
   <!-- loading message (removed by JS after stories loaded) -->
@@ -56,6 +71,8 @@
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
 
+  <!-- List of stories favorited -->
+  <ol id="favorited-stories-list" class="stories-list hidden"></ol>
 </section>
 
 <!-- Login and signup forms -->
@@ -97,7 +114,6 @@
     </div>
     <button type="submit">create account</button>
   </form>
-</section>
 
 <!-- Library JS & our JS -->
 <script src="https://unpkg.com/jquery"></script>

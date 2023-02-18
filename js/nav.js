@@ -10,6 +10,7 @@ function navAllStories(evt) {
   console.debug("navAllStories", evt);
   hidePageComponents();
   putStoriesOnPage();
+  
 }
 
 $body.on("click", "#nav-all", navAllStories);
@@ -21,7 +22,7 @@ function navLoginClick(evt) {
   hidePageComponents();
   $loginForm.show();
   $signupForm.show();
-  $submit.hide(); 
+  $submit.hide();
 }
 
 $navLogin.on("click", navLoginClick);
@@ -33,11 +34,17 @@ function updateNavOnLogin() {
   $(".main-nav-links").show();
   $navLogin.hide();
   $navLogOut.show();
+  
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
-//When a user logs in they are able to submit a story
-function navSubmit(){
-  updateNavOnLogin();
-  $submit.show(); 
+////subpart 2B: story submit form appears on click story "submit"
+function navSubmit() {
+  console.debug("navSubmit");
+  hidePageComponents();
+  $allStoriesList.show();
+  $submitForm.show();
 }
+
+$submit.on("click", navSubmit);
+
