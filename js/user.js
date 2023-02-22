@@ -9,9 +9,9 @@ let currentUser;
 
 /** Handle login form submission. If login ok, sets up the user instance */
 
-async function login(evt) {
-  console.debug("login", evt);
-  evt.preventDefault();
+async function login(e) {
+  console.debug("login", e);
+  e.preventDefault();
 
   // grab the username and password
   const username = $("#login-username").val();
@@ -31,9 +31,9 @@ $loginForm.on("submit", login);
 
 /** Handle signup form submission. */
 
-async function signup(evt) {
-  console.debug("signup", evt);
-  evt.preventDefault();
+async function signup(e) {
+  console.debug("signup", e);
+  e.preventDefault();
 
   const name = $("#signup-name").val();
   const username = $("#signup-username").val();
@@ -56,8 +56,8 @@ $signupForm.on("submit", signup);
  * Remove their credentials from localStorage and refresh page
  */
 
-function logout(evt) {
-  console.debug("logout", evt);
+function logout(e) {
+  console.debug("logout", e);
   localStorage.clear();
   location.reload();
 }
@@ -93,7 +93,6 @@ function saveUserCredentialsInLocalStorage() {
   if (currentUser) {
     localStorage.setItem("token", currentUser.loginToken);
     localStorage.setItem("username", currentUser.username);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
   }
 }
 
@@ -112,7 +111,18 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
 
   hidePageComponents();
-  
+// re-display stories (so that "favorite" stars can appear)
+  putStoriesOnPage();
   $allStoriesList.show();
+
   updateNavOnLogin();
+  generateUserProfile();
+}
+
+function generateUserProfile() {
+  console.debug("generateUserProfile");
+
+  $("#profile-name").text(currentUser.name);
+  $("#profile-username").text(currentUser.username);
+  $("#profile-account-date").text(currentUser.createdAt.slice(0, 10));
 }

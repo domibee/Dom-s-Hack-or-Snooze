@@ -6,18 +6,20 @@ const $body = $("body");
 
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
-const $favoriteStories = $('#favorite-stories-list');
+const $favoritedStories = $("#favorited-stories-list");
+const $ownStories = $("#my-stories");
+const $storiesLists = $(".stories-list");
+const $submitbtn = $("#submit");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
+const $submitForm = $("#submit-form");
 
+const $navSubmitStory = $("#navSubmitStory")
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
-const $submit = $("#submit");
-const $submitForm = $("#submit-form");
-const $userProfile = $("#user-container");
-const $favoriteButton = $(".fa-star");
 
+const $userProfile = $("#user-profile");
 
 /** To make it easier for individual components to show just themselves, this
  * is a useful function that hides pretty much everything on the page. After
@@ -26,10 +28,12 @@ const $favoriteButton = $(".fa-star");
 
 function hidePageComponents() {
   const components = [
-    $allStoriesList,
+    // $allStoriesList,
     $loginForm,
     $signupForm,
-
+    $submitForm,
+    $storiesLists, 
+    $userProfile
   ];
   components.forEach(c => c.hide());
 }
@@ -48,4 +52,5 @@ async function start() {
 }
 
 // Once the DOM is entirely loaded, begin the app
+
 $(start);
